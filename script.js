@@ -281,7 +281,7 @@ function showLoading(show) {
         loading.classList.add('hidden');
     }
 }
-
+// comentario
 function showError(message) {
     alert(message); // En una aplicación real, usaríamos un sistema de notificaciones más elegante
 }
