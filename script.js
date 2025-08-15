@@ -24,6 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
 });
 
+//------------ 
+
+
+
+
+
+
+
+
+//-------------------------------------------------------
 // Función para cargar la lista de Pokémon
 async function loadPokemonList() {
     try {
