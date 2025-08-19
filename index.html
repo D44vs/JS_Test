@@ -4,91 +4,207 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wiki Pokémon</title>
+    <title>Wikimon</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
+<body class="min-h-screen bg-gradient-to-r from-pink-600 via-purple-700 to-blue-600 text-white font-sans">
+    <div class="container mx-auto px-1">
         <!-- Encabezado -->
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-blue-600 mb-2">Wiki Pokémon ⚡</h1>
-            <p class="text-gray-600">Descubre el mundo de los Pokémon</p>
+        <header class="shadow-lg bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 shadow-xl rounded-xl mb-6">
+            <div class="container mx-auto flex justify-between items-center px-6 py-4">
+                <!-- Logo -->
+                <h1 class="text-2xl font-extrabold tracking-wider text-white drop-shadow-[0_0_6px_#ff00ff]">
+                    <span class="text-pink-400">[</span> WIKIMON <span class="text-pink-400">]</span>
+                </h1>
+
+                <!-- Navigation -->
+                <nav>
+                    <ul class="flex space-x-8 text-lg font-bold">
+                        <!-- Total de Pokemones -->
+                        <li>
+                            <span
+                                class="text-blue-400 bg-gray-900 px-4 py-2 rounded-lg shadow-md transition duration-300 hover:drop-shadow-[0_0_10px_#00bfff] cursor-help">
+                                🔵 Pokemones: <span id="totalPokemon">151</span>
+                            </span>
+                        </li>
+
+                        <!-- Página actual -->
+                        <li>
+                            <span id="pageInfo"
+                                class="text-pink-400 bg-gray-900 px-4 py-2 rounded-lg shadow-md transition duration-300 hover:drop-shadow-[0_0_10px_#ff00ff] cursor-help">
+                                📄 Página 1
+                            </span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
         </header>
 
-        <!-- Controles de paginación -->
-        <div class="flex justify-center mb-6 space-x-4">
-            <button id="prevBtn"
-                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400">
-                Anterior
-            </button>
-            <span id="pageInfo" class="flex items-center px-4 py-2 bg-white rounded shadow">
-                Página 1
-            </span>
-            <button id="nextBtn" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Siguiente
-            </button>
-        </div>
-
-        <div class="flex justify-center mb-5">
-            <label for="search" class="mb-5 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-            <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input type="search" id="search"
-                    class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search" required />
-                <button type="submit"
-                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-            </div>
-        </div>
-
-
-        <!-- Tabla de Pokémon -->
-        <div class="bg-dark rounded-lg shadow-lg overflow-hidden">
-
-            <table class="w-full">
-                <thead class="bg-blue-500 text-white">
-                    <tr>
-                        <th class="px-6 py-3 text-left">ID</th>
-                        <th class="px-6 py-3 text-left">Imagen</th>
-                        <th class="px-6 py-3 text-left">Nombre</th>
-                        <th class="px-6 py-3 text-left">Tipos</th>
-                        <th class="px-6 py-3 text-left">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="pokemonTableBody">
-                    <!-- Los datos se cargarán aquí dinámicamente -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Loading indicator -->
-        <div id="loading" class="text-center py-8 hidden">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-            <p class="mt-2 text-gray-600">Cargando Pokémon...</p>
-        </div>
-    </div>
-
-    <!-- Modal para detalles del Pokémon -->
-    <div id="pokemonModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4 max-h-96 overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="modalTitle" class="text-2xl font-bold text-blue-600"></h2>
-                <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">
-                    &times;
+        <div class="container mx-auto px-4 flex gap-6">
+            <!-- 📌 Sidebar -->
+            <aside
+                class="w-72 min-h-screen bg-gradient-to-b from-gray-900 via-black to-gray-900 text-white p-6 shadow-2xl rounded-2xl border border-gray-800">
+                <!-- 🔍 Buscador -->
+                <button id="resetFilters"
+                    class="w-full py-2 px-3 mb-6 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white shadow-md transition">
+                    🔄 Reestablecer filtros
                 </button>
+                <div class="mb-6">
+                    <label for="searchInput" class="block text-sm font-semibold mb-2 text-gray-300">Buscar
+                        Pokémon</label>
+                    <div class="flex">
+                        <input id="searchInput" type="text" placeholder="Ej: Pikachu..."
+                            class="w-full px-3 py-2 rounded-l-lg bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500" />
+                        <button
+                            class="px-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 rounded-r-lg font-bold shadow-md hover:scale-105 transition">
+                            🔎
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 🎛️ Filtros por tipo -->
+                <div class="mb-6">
+                    <h2 class="text-lg font-bold mb-3">Tipos</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <button data-type="electric"
+                            class="px-3 py-1 bg-yellow-500 hover:bg-yellow-400 rounded-lg text-sm shadow">⚡
+                            Eléctrico</button>
+                        <button data-type="water"
+                            class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm shadow">💧 Agua</button>
+                        <button data-type="fire"
+                            class="px-3 py-1 bg-red-600 hover:bg-red-500 rounded-lg text-sm shadow">🔥 Fuego</button>
+                        <button data-type="grass"
+                            class="px-3 py-1 bg-green-600 hover:bg-green-500 rounded-lg text-sm shadow">🌿
+                            Planta</button>
+                        <button data-type="rock"
+                            class="px-3 py-1 bg-gray-600 hover:bg-gray-500 rounded-lg text-sm shadow">🪨 Roca</button>
+                        <button data-type="poison"
+                            class="px-3 py-1 bg-purple-600 hover:bg-purple-500 rounded-lg text-sm shadow">☠️
+                            Veneno</button>
+                        <button data-type="fairy"
+                            class="px-3 py-1 bg-pink-500 hover:bg-pink-400 rounded-lg text-sm shadow">✨ Hada</button>
+                        <button data-type="psychic"
+                            class="px-3 py-1 bg-indigo-700 hover:bg-indigo-600 rounded-lg text-sm shadow">🔮
+                            Psíquico</button>
+                    </div>
+                </div>
+
+                <!-- 📂 Generaciones -->
+                <div class="mb-6">
+                    <h2 class="text-lg font-bold mb-3">Generación</h2>
+                    <select id="generationSelect"
+                        class="w-full px-3 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="">Todas</option>
+                        <option value="1">Kanto (Gen 1)</option>
+                        <option value="2">Johto (Gen 2)</option>
+                        <option value="3">Hoenn (Gen 3)</option>
+                        <option value="4">Sinnoh (Gen 4)</option>
+                        <option value="5">Unova (Gen 5)</option>
+                        <option value="6">Kalos (Gen 6)</option>
+                        <option value="7">Alola (Gen 7)</option>
+                        <option value="8">Galar (Gen 8)</option>
+                        <option value="9">Paldea (Gen 9)</option>
+                    </select>
+                </div>
+
+                <!-- ↕️ Ordenar
+                <div class="mb-6">
+                    <h2 class="text-lg font-bold mb-3">Ordenar por</h2>
+                    <select id="sortSelect"
+                        class="w-full px-3 py-2 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        <option value="hp">HP</option>
+                        <option value="attack">Ataque</option>
+                        <option value="defense">Defensa</option>
+                    </select>
+                </div> -->
+
+                <!-- 📊 Stats -->
+                <div>
+                    <h2 class="text-lg font-bold mb-3">Estadísticas</h2>
+                    <div class="bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-700">
+                        <p class="mb-2">Pokémon registrados: <span class="font-bold text-pink-400">898</span></p>
+                        <p class="mb-2">Favoritos: <span class="font-bold text-green-400">56</span></p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 📊 Tabla de Pokémon -->
+            <div class="flex-1">
+                <div class="flex justify-center mb-6 space-x-4">
+                    <!-- Botón Anterior -->
+                    <button id="prevBtn"
+                        class="px-4 py-2 rounded-lg font-bold bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-md hover:scale-105 hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        ⬅ Anterior
+                    </button>
+
+                    <!-- Info de página -->
+                    <span id="pageInfo"
+                        class="flex items-center px-5 py-2 bg-gray-800 text-pink-400 rounded-xl shadow-inner font-semibold">
+                        📄 Página 1
+                    </span>
+
+                    <!-- Botón Siguiente -->
+                    <button id="nextBtn"
+                        class="px-4 py-2 rounded-lg font-bold bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-md hover:scale-105 hover:shadow-lg transition">
+                        Siguiente ➡
+                    </button>
+                </div>
+
+                <div class="bg-gray-900 rounded-xl shadow-xl overflow-hidden border border-pink-500/30">
+                    <table class="w-full text-white">
+                        <thead class="bg-gradient-to-r from-purple-700 to-pink-600">
+                            <tr>
+                                <th class="px-6 py-3 text-left">ID</th>
+                                <th class="px-6 py-3 text-left">Imagen</th>
+                                <th class="px-6 py-3 text-left">Nombre</th>
+                                <th class="px-6 py-3 text-left">Tipos</th>
+                                <th class="px-6 py-3 text-left">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pokemonTableBody" class="divide-y divide-gray-900">
+                            <!-- Los datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ⏳ Loading -->
+                <div id="loading" class="text-center py-8 hidden">
+                    <div class="inline-block animate-spin rounded-full h-10 w-10 border-b-4 border-pink-500"></div>
+                    <p class="mt-2 text-gray-300">Cargando Pokémon...</p>
+                </div>
             </div>
-            <div id="modalContent">
-                <!-- El contenido del modal se cargará aquí -->
+        </div>
+
+        <!-- 🪄 Modal -->
+        <div id="pokemonModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
+            <div
+                class="bg-gray-900 border border-pink-500/40 rounded-2xl p-6 max-w-md w-full mx-4 max-h-96 overflow-y-auto shadow-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 id="modalTitle" class="text-2xl font-bold text-pink-400 drop-shadow-[0_0_8px_#ff00ff]"></h2>
+                    <button id="closeModal" class="text-gray-400 hover:text-pink-400 text-3xl font-bold transition">
+                        &times;
+                    </button>
+                </div>
+                <div id="modalContent" class="text-gray-200">
+                    <!-- Contenido dinámico -->
+                </div>
             </div>
         </div>
     </div>
+
+    <footer class="bg-gradient-to-r from-purple-700 to-pink-600 text-white py-6 mt-10 shadow-lg">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm md:text-base font-semibold drop-shadow-[0_0_6px_#ff00ff]">
+                © 2025 GamerDex. Todos los derechos reservados.
+            </p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-yellow-300 hover:drop-shadow-[0_0_8px_#ffd700] transition">Privacidad</a>
+                <a href="#" class="hover:text-cyan-300 hover:drop-shadow-[0_0_8px_#00ffff] transition">Términos</a>
+                <a href="#" class="hover:text-pink-300 hover:drop-shadow-[0_0_8px_#ff00ff] transition">Contacto</a>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
